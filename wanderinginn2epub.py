@@ -322,8 +322,10 @@ def main():
     # in volume 1 or 3 and the latest published chapter)
     index = []
     if not args.chapter and not args.volume:
-        index = full_index
-        args.volume = sorted(set((c.volume for c in index)))
+        #index = full_index
+        #args.volume = sorted(set((c.volume for c in index)))
+        print("Don't scrape irresponsibly! (tried to scrape whole site)")
+        return
     else:
         chapters = set()
         for chapter_title in args.chapter:
@@ -340,6 +342,8 @@ def main():
             for c in full_index:
                 if c.volume in args.volume:
                     chapters.add(c)
+        if len(chapters) > 1:
+            raise Exception('Do not download multiple chapters!')
         index = sorted(list(chapters))
 
     if args.print_index:
